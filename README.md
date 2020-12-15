@@ -51,7 +51,14 @@ Create a client
 redis = Cloak::Redis.new(key: key)
 ```
 
-And use it in place of a `Redis` instance. A few methods aren’t supported:
+And use it in place of a `Redis` instance.
+
+```ruby
+redis.set("hello", "world")
+redis.get("hello")
+```
+
+A few methods aren’t supported:
 
 - `lrem` since encrypted list elements aren’t comparable
 - `setrange`, `setbit`, `append`, and `bitop` since encrypted strings can’t be modified in-place
@@ -69,6 +76,11 @@ dalli = Cloak::Dalli.new(key: key)
 ```
 
 And use it in place a of `Dalli::Client` instance.
+
+```ruby
+dalli.set("hello", "world")
+dalli.get("hello")
+```
 
 ## Technical Details
 
