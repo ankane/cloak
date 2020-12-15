@@ -68,7 +68,7 @@ Create a client
 dalli = Cloak::Dalli.new(key: key)
 ```
 
-And use it in place a `Dalli::Client` instance.
+And use it in place a of `Dalli::Client` instance.
 
 ## Technical Details
 
