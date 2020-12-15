@@ -44,14 +44,6 @@ module Cloak
       @encryptor.open(to_binary(key), nonce: KEY_NONCE)
     end
 
-    def encrypt_field(key, field)
-      @encryptor.seal(to_binary(field), nonce: key.slice(0, 16))
-    end
-
-    def decrypt_field(key, field)
-      @encryptor.open(to_binary(field), nonce: key.slice(0, 16))
-    end
-
     def encrypt_member(value)
       @encryptor.seal(to_binary(value), nonce: MEMBER_NONCE)
     end
@@ -66,6 +58,14 @@ module Cloak
 
     def decrypt_hll_element(value)
       @encryptor.open(to_binary(value), nonce: HLL_ELEMENT_NONCE)
+    end
+
+    def encrypt_field(key, field)
+      @encryptor.seal(to_binary(field), nonce: key.slice(0, 16))
+    end
+
+    def decrypt_field(key, field)
+      @encryptor.open(to_binary(field), nonce: key.slice(0, 16))
     end
 
     def to_binary(value)
