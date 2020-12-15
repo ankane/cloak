@@ -75,7 +75,7 @@ Create a client
 dalli = Cloak::Dalli.new(key: key)
 ```
 
-And use it in place a of `Dalli::Client` instance.
+And use it in place of a `Dalli::Client` instance.
 
 ```ruby
 dalli.set("hello", "world")
