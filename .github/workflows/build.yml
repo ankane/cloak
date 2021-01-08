@@ -8,9 +8,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+        - ruby: 3.0
         - ruby: 2.7
         - ruby: 2.6
-        - ruby: 2.5
     steps:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
