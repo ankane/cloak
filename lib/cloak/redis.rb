@@ -10,11 +10,21 @@ module Cloak
     def_delegators :@redis, :auth, :select, :quit, :bgrewriteaof, :bgsave,
       :config, :client, :dbsize, :flushall, :flushdb, :info, :lastsave,
       :monitor, :save, :shutdown, :slaveof, :slowlog, :sync, :time,
-      :unwatch, :pipelined, :multi, :exec, :discard
+      :unwatch, :exec, :discard
 
     def initialize(key: nil, **options)
       @redis = ::Redis.new(**options)
       create_encryptor(key)
+    end
+
+    def pipelined(&block)
+      raise Error, "pipelined with block parameter not supported yet" if block&.arity != 0
+      @redis.pipelined(&block)
+    end
+
+    def multi(&block)
+      raise Error, "multi with block parameter not supported yet" if block&.arity != 0
+      @redis.multi(&block)
     end
 
     def debug(*args)

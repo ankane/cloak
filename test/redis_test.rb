@@ -363,6 +363,14 @@ class RedisTest < Minitest::Test
     assert_equal "world", redis.get("hello")
   end
 
+  def test_pipelined_block_parameter
+    error = assert_raises(Cloak::Error) do
+      redis.pipelined do |pipeline|
+      end
+    end
+    assert_equal "pipelined with block parameter not supported yet", error.message
+  end
+
   def test_pipelined_futures
     val = nil
     redis.pipelined do
@@ -378,6 +386,14 @@ class RedisTest < Minitest::Test
     end
     assert_equal ["OK"], res
     assert_equal "world", redis.get("hello")
+  end
+
+  def test_multi_block_parameter
+    error = assert_raises(Cloak::Error) do
+      redis.multi do |transaction|
+      end
+    end
+    assert_equal "multi with block parameter not supported yet", error.message
   end
 
   def test_scan
