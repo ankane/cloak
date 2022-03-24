@@ -13,7 +13,7 @@ See [technical details](#technical-details) for more info.
 Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'cloak-rb'
+gem "cloak-rb"
 ```
 
 ## Getting Started
