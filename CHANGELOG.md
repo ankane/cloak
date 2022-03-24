@@ -1,4 +1,4 @@
-## 0.1.1 (unreleased)
+## 0.1.1 (2022-03-23)
 
 - Added error for `pipelined` and `multi` with block parameter
 - Fixed error with `blpop`, `brpop`, `bzpopmin` and `bzpopmax` with version 4.6+ of `redis` gem
