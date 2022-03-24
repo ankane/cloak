@@ -739,7 +739,7 @@ module Cloak
 
       keys = args.flatten.map { |k| encrypt_key(k) }
 
-      on_result(@redis._bpop(cmd, [keys, {timeout: timeout}], &blk)) do |res|
+      on_result(@redis.send(:_bpop, cmd, [keys, {timeout: timeout}], &blk)) do |res|
         if res.nil?
           res
         elsif zset
