@@ -109,7 +109,7 @@ class RedisTest < Minitest::Test
   end
 
   def test_mset_mget
-    redis.mset("k1", "v1", "k2", "v2", "k3", nil)
+    redis.mset("k1", "v1", "k2", "v2", "k3", "")
     assert_equal ["v1", "v2", "", nil], redis.mget("k1", "k2", "k3", "missing")
     expected = {"k1" => "v1", "k2" => "v2", "k3" => "", "missing" => nil}
     assert_equal expected, redis.mapped_mget("k1", "k2", "k3", "missing")
