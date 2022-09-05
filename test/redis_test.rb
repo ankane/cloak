@@ -360,6 +360,8 @@ class RedisTest < Minitest::Test
   end
 
   def test_pipelined
+    skip if Redis::VERSION.to_i >= 5
+
     res = redis.pipelined do
       redis.set("hello", "world")
     end
@@ -376,6 +378,8 @@ class RedisTest < Minitest::Test
   end
 
   def test_pipelined_futures
+    skip if Redis::VERSION.to_i >= 5
+
     val = nil
     redis.pipelined do
       redis.set("hello", "world")
@@ -385,6 +389,8 @@ class RedisTest < Minitest::Test
   end
 
   def test_multi
+    skip if Redis::VERSION.to_i >= 5
+
     res = redis.multi do
       redis.set("hello", "world")
     end
