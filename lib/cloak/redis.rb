@@ -341,6 +341,10 @@ module Cloak
       @redis.srem(encrypt_key(key), encrypt_member(member))
     end
 
+    def srem?(key, member)
+      @redis.srem?(encrypt_key(key), encrypt_member(member))
+    end
+
     def spop(key, count = nil)
       on_result(@redis.spop(encrypt_key(key))) do |res|
         if count.nil?

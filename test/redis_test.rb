@@ -191,7 +191,7 @@ class RedisTest < Minitest::Test
     assert_equal 2, redis.scard("myset")
     assert_equal ["hello", "world"], redis.smembers("myset").sort
     assert redis.sismember("myset", "world")
-    redis.srem("myset", "world")
+    redis.srem?("myset", "world")
     refute redis.sismember("myset", "world")
     assert_equal ["hello"], redis.smembers("myset")
   end

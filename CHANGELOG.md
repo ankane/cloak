@@ -1,6 +1,6 @@
 ## 0.2.0 (unreleased)
 
-- Added `sadd?` method
+- Added `sadd?` and `srem?` methods
 - Dropped support for Ruby < 2.7
 
 ## 0.1.1 (2022-03-23)
