@@ -333,6 +333,10 @@ module Cloak
       @redis.sadd(encrypt_key(key), encrypt_member(member))
     end
 
+    def sadd?(key, member)
+      @redis.sadd?(encrypt_key(key), encrypt_member(member))
+    end
+
     def srem(key, member)
       @redis.srem(encrypt_key(key), encrypt_member(member))
     end

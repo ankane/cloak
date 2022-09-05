@@ -4,5 +4,5 @@ gemspec
 
 gem "rake"
 gem "minitest", ">= 5"
-gem "redis"
+gem "redis", "< 5"
 gem "dalli"

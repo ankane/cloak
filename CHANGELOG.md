@@ -1,3 +1,7 @@
+## 0.1.2 (unreleased)
+
+- Added `sadd?` method
+
 ## 0.1.1 (2022-03-23)
 
 - Added error for `pipelined` and `multi` with block parameter

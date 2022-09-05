@@ -6,11 +6,15 @@ class RedisTest < Minitest::Test
   end
 
   def test_debug_object
+    skip "ERR DEBUG command not allowed" if server_version >= 7
+
     redis.set("hello", "world")
     assert_match " refcount:1 ", redis.debug("object", "hello")
   end
 
   def test_debug_object_missing
+    skip "ERR DEBUG command not allowed" if server_version >= 7
+
     error = assert_raises(Redis::CommandError) do
       redis.debug("object", "missing")
     end
@@ -181,9 +185,9 @@ class RedisTest < Minitest::Test
   end
 
   def test_set
-    redis.sadd("myset", "hello")
-    redis.sadd("myset", "world")
-    redis.sadd("myset", "world")
+    redis.sadd?("myset", "hello")
+    redis.sadd?("myset", "world")
+    redis.sadd?("myset", "world")
     assert_equal 2, redis.scard("myset")
     assert_equal ["hello", "world"], redis.smembers("myset").sort
     assert redis.sismember("myset", "world")
@@ -193,40 +197,40 @@ class RedisTest < Minitest::Test
   end
 
   def test_sdiff
-    ["a", "b", "c"].map { |v| redis.sadd("key1", v) }
-    ["c", "d", "e"].map { |v| redis.sadd("key2", v) }
+    ["a", "b", "c"].map { |v| redis.sadd?("key1", v) }
+    ["c", "d", "e"].map { |v| redis.sadd?("key2", v) }
     assert_equal ["a", "b"], redis.sdiff("key1", "key2").sort
   end
 
   def test_sdiffstore
-    ["a", "b", "c"].map { |v| redis.sadd("key1", v) }
-    ["c", "d", "e"].map { |v| redis.sadd("key2", v) }
+    ["a", "b", "c"].map { |v| redis.sadd?("key1", v) }
+    ["c", "d", "e"].map { |v| redis.sadd?("key2", v) }
     redis.sdiffstore("key", "key1", "key2")
     assert_equal ["a", "b"], redis.smembers("key").sort
   end
 
   def test_sinter
-    ["a", "b", "c"].map { |v| redis.sadd("key1", v) }
-    ["c", "d", "e"].map { |v| redis.sadd("key2", v) }
+    ["a", "b", "c"].map { |v| redis.sadd?("key1", v) }
+    ["c", "d", "e"].map { |v| redis.sadd?("key2", v) }
     assert_equal ["c"], redis.sinter("key1", "key2").sort
   end
 
   def test_sinterstore
-    ["a", "b", "c"].map { |v| redis.sadd("key1", v) }
-    ["c", "d", "e"].map { |v| redis.sadd("key2", v) }
+    ["a", "b", "c"].map { |v| redis.sadd?("key1", v) }
+    ["c", "d", "e"].map { |v| redis.sadd?("key2", v) }
     redis.sinterstore("key", "key1", "key2")
     assert_equal ["c"], redis.smembers("key").sort
   end
 
   def test_sunion
-    ["a", "b", "c"].map { |v| redis.sadd("key1", v) }
-    ["c", "d", "e"].map { |v| redis.sadd("key2", v) }
+    ["a", "b", "c"].map { |v| redis.sadd?("key1", v) }
+    ["c", "d", "e"].map { |v| redis.sadd?("key2", v) }
     assert_equal ["a", "b", "c", "d", "e"], redis.sunion("key1", "key2").sort
   end
 
   def test_sunionstore
-    ["a", "b", "c"].map { |v| redis.sadd("key1", v) }
-    ["c", "d", "e"].map { |v| redis.sadd("key2", v) }
+    ["a", "b", "c"].map { |v| redis.sadd?("key1", v) }
+    ["c", "d", "e"].map { |v| redis.sadd?("key2", v) }
     redis.sunionstore("key", "key1", "key2")
     assert_equal ["a", "b", "c", "d", "e"], redis.smembers("key").sort
   end
@@ -439,7 +443,7 @@ class RedisTest < Minitest::Test
   end
 
   def test_sscan
-    ["a", "b", "c"].each { |v| redis.sadd("myset", v) }
+    ["a", "b", "c"].each { |v| redis.sadd?("myset", v) }
     res = redis.sscan("myset", 0)
     assert_equal "0", res[0]
     assert_equal ["a", "b", "c"], res[1].sort
@@ -479,5 +483,9 @@ class RedisTest < Minitest::Test
 
   def redis
     @redis ||= Cloak::Redis.new(key: Cloak.generate_key, logger: $logger)
+  end
+
+  def server_version
+    redis.info["redis_version"].to_f
   end
 end
