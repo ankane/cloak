@@ -482,7 +482,11 @@ class RedisTest < Minitest::Test
   end
 
   def redis
-    @redis ||= Cloak::Redis.new(key: Cloak.generate_key, logger: $logger)
+    @redis ||= begin
+      options = {}
+      options[:logger] = $logger if Redis::VERSION.to_i < 5
+      Cloak::Redis.new(key: Cloak.generate_key, **options)
+    end
   end
 
   def server_version
