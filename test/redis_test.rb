@@ -57,7 +57,7 @@ class RedisTest < Minitest::Test
     redis.lpush("mylist", "hello")
     assert redis.object("help")
     assert_equal 1, redis.object("refcount", "mylist")
-    assert_equal "quicklist", redis.object("encoding", "mylist")
+    assert_includes ["quicklist", "listpack"], redis.object("encoding", "mylist")
     assert_equal 0, redis.object("idletime", "mylist")
   end
 
