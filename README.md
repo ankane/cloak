@@ -6,7 +6,7 @@ Encrypts keys, values, list elements, set members, and hash fields while still b
 
 See [technical details](#technical-details) for more info.
 
-[![Build Status](https://github.com/ankane/cloak/workflows/build/badge.svg?branch=master)](https://github.com/ankane/cloak/actions)
+[![Build Status](https://github.com/ankane/cloak/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/cloak/actions)
 
 ## Installation
 
