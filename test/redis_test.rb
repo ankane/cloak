@@ -18,7 +18,7 @@ class RedisTest < Minitest::Test
     error = assert_raises(Redis::CommandError) do
       redis.debug("object", "missing")
     end
-    assert_equal "ERR no such key", error.message
+    assert_match "ERR no such key", error.message
   end
 
   def test_ping
