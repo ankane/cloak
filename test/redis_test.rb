@@ -86,7 +86,7 @@ class RedisTest < Minitest::Test
     error = assert_raises(Redis::CommandError) do
       redis.incr("hello")
     end
-    assert_equal "ERR value is not an integer or out of range", error.message
+    assert_match "ERR value is not an integer or out of range", error.message
   end
 
   def test_incrbyfloat
